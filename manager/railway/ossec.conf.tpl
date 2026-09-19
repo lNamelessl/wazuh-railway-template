@@ -96,8 +96,12 @@
     <skip_nfs>yes</skip_nfs>
   </sca>
 
+  <!-- Vulnerability detection ships DISABLED: its CVE feed needs 2-4 GB on
+       /var/ossec/data (queue/vd). To enable: resize the wazuh-manager volume in
+       Railway (Settings -> Volumes, ~15 GB) and set enabled to yes, then restart
+       the service. -->
   <vulnerability-detection>
-    <enabled>yes</enabled>
+    <enabled>no</enabled>
     <index-status>yes</index-status>
     <feed-update-interval>60m</feed-update-interval>
   </vulnerability-detection>
