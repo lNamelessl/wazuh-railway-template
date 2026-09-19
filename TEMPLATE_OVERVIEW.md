@@ -115,5 +115,10 @@ publicly reachable agent ports without owning any infrastructure.
 - No external services required: the indexer replaces any managed database, certificates
   are generated in-cluster, and vulnerability-detection feeds are downloaded from Wazuh's
   CDN at runtime.
-- Outbound internet for image pulls and CVE feed updates; TCP proxies for external agents
-  (Railway has no UDP, so syslog 514/udp is not available — use agents).
+- Outbound internet for image pulls; TCP proxies for external agents (Railway has no UDP,
+  so syslog 514/udp is not available — use agents).
+- Vulnerability detection ships **disabled**: its CVE feed needs 2–4 GB inside the manager
+  volume and would overflow the default 5 GB volume. To enable it, resize the
+  `wazuh-manager` volume in Railway (Settings → Volumes, ~15 GB) and set
+  `vulnerability-detection: enabled yes` in `/var/ossec/data/var_ossec_etc/ossec.conf`,
+  then restart the service.
