@@ -6,8 +6,6 @@
   },
   "deploy": {
     "startCommand": "/railway/start.sh",
-    "healthcheckPath": "/app/login",
-    "healthcheckTimeout": 300,
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 10
   }
