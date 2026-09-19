@@ -8,7 +8,7 @@ DNS** and **zero demo credentials**.
 > **Resource honesty:** Wazuh officially wants ~8 GB RAM (indexer JVM alone is pinned at 1 GB).
 > Expect **4–6 GB** actual concurrent usage — roughly **$25–50/mo** on Railway usage-based billing.
 
-[![Deploy on Railway](https://railway.com/button.svg)](https://railway.app/new?github_url=https://github.com/lNamelessl/wazuh-railway-template)
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/wazuh-template)
 
 ## Services
 
