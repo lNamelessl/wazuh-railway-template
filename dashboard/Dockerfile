@@ -1,5 +1,5 @@
 # Wazuh dashboard with Railway adaptations (deterministic certs, edge-terminated TLS)
-FROM wazuh/wazuh-dashboard:4.12.0
+FROM wazuh/wazuh-dashboard:4.14.7
 
 USER root
 

@@ -27,6 +27,7 @@
   <remote>
     <connection>secure</connection>
     <port>1514</port>
+    <ipv6>yes</ipv6>
     <protocol>tcp</protocol>
     <queue_size>131072</queue_size>
   </remote>
@@ -79,7 +80,7 @@
     <os>yes</os>
     <network>yes</network>
     <packages>yes</packages>
-    <ports all="no">yes</ports>
+    <ports all="yes">yes</ports>
     <processes>yes</processes>
 
     <!-- Database synchronization settings -->
@@ -255,6 +256,9 @@
     <list>etc/lists/audit-keys</list>
     <list>etc/lists/amazon/aws-eventnames</list>
     <list>etc/lists/security-eventchannel</list>
+    <list>etc/lists/malicious-ioc/malicious-ip</list>
+    <list>etc/lists/malicious-ioc/malicious-domains</list>
+    <list>etc/lists/malicious-ioc/malware-hashes</list>
 
     <!-- User-defined ruleset -->
     <decoder_dir>etc/decoders</decoder_dir>
@@ -272,6 +276,7 @@
   <auth>
     <disabled>no</disabled>
     <port>1515</port>
+    <ipv6>yes</ipv6>
     <use_source_ip>no</use_source_ip>
     <purge>yes</purge>
     <use_password>no</use_password>

@@ -1,5 +1,5 @@
 # Wazuh indexer with Railway adaptations (deterministic certs + secret-driven security init)
-FROM wazuh/wazuh-indexer:4.12.0
+FROM wazuh/wazuh-indexer:4.14.7
 
 USER root
 

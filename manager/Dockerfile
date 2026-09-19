@@ -1,5 +1,5 @@
 # Wazuh manager with Railway adaptations (deterministic certs + one-volume persistence)
-FROM wazuh/wazuh-manager:4.12.0
+FROM wazuh/wazuh-manager:4.14.7
 
 RUN dnf install -y python3 python3-pip && \
     python3 -m pip install --no-cache-dir cryptography && \
