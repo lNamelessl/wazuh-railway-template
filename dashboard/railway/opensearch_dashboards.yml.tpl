@@ -1,0 +1,11 @@
+server.host: 0.0.0.0
+server.port: 5601
+server.name: wazuh-dashboard
+opensearch.hosts: __INDEXER_URL__
+opensearch.ssl.verificationMode: full
+opensearch.requestHeadersWhitelist: ["securitytenant","Authorization"]
+opensearch_security.multitenancy.enabled: false
+opensearch_security.readonly_mode.roles: ["kibana_read_only"]
+server.ssl.enabled: false
+opensearch.ssl.certificateAuthorities: ["/usr/share/wazuh-dashboard/certs/root-ca.pem"]
+uiSettings.overrides.defaultRoute: /app/wz-home
