@@ -24,6 +24,10 @@ export API_USERNAME="${API_USERNAME:-wazuh-wui}"
 export AUTO_ENROLLMENT_ENABLED="${AUTO_ENROLLMENT_ENABLED:-true}"
 
 # --- 1. one-volume persistence (Railway: one volume per service) -------------
+# The Railway volume is mounted at /var/ossec/data — INSIDE the wazuh chroot —
+# and /var/ossec/<dir> become RELATIVE symlinks into it, because wazuh daemons
+# chroot("/var/ossec"): absolute symlinks to paths outside would dangle.
+VOLDIR=/var/ossec/data
 PERSIST=(
   /var/ossec/api/configuration
   /var/ossec/etc
@@ -34,19 +38,24 @@ PERSIST=(
   /var/ossec/active-response/bin
   /var/ossec/agentless
   /var/ossec/wodles
-  /etc/filebeat
-  /var/lib/filebeat
 )
 for d in "${PERSIST[@]}"; do
-  slug="$(printf '%s' "$d" | sed 's|^/||; s|/|_|g')"
-  vol="/data/$slug"
+  slug="$(printf '%s' "$d" | sed 's|^/var/ossec/||; s|/|_|g')"
+  vol="$VOLDIR/$slug"
   if [ ! -d "$vol" ] || [ -z "$(ls -A "$vol" 2>/dev/null)" ]; then
     mkdir -p "$vol"
     cp -a "$d/." "$vol/" 2>/dev/null || true
   fi
   rm -rf "$d"
-  ln -s "$vol" "$d"
+  ln -s "$(realpath --relative-to="$(dirname "$d")" "$vol")" "$d"
 done
+# filebeat is not chrooted; absolute symlinks are fine there.
+mkdir -p "$VOLDIR/filebeat_etc" "$VOLDIR/filebeat_var"
+[ -z "$(ls -A "$VOLDIR/filebeat_etc" 2>/dev/null)" ] && cp -a /etc/filebeat/. "$VOLDIR/filebeat_etc/" 2>/dev/null || true
+[ -z "$(ls -A "$VOLDIR/filebeat_var" 2>/dev/null)" ] && cp -a /var/lib/filebeat/. "$VOLDIR/filebeat_var/" 2>/dev/null || true
+rm -rf /etc/filebeat /var/lib/filebeat
+ln -s "$VOLDIR/filebeat_etc" /etc/filebeat
+ln -s "$VOLDIR/filebeat_var" /var/lib/filebeat
 
 # --- 2. deterministic TLS material -------------------------------------------
 python3 /railway/wazuh_certs.py manager /etc/ssl
